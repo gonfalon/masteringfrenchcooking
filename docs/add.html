@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add New Recipie - Mastering French Cooking</title>
+        <link href="https://cdn.jsdelivr.net/npm/beercss@3.9.7/dist/cdn/beer.min.css" rel="stylesheet">
+        <link href="beertheme.css" rel="stylesheet">
+        <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.9.7/dist/cdn/beer.min.js"></script>
+    </head>
+    <script type="text/javascript">
+        // on page load
+        var scan = async () => {
+            // scan through 192.168.0.xxx to find the server, then set the form action to http://192.168.0.xxx/upload
+            var ip = "192.168.0.";
+            var found = false;
+            var promises = [];
+            for (var i = 1; i <= 255; i++) {
+                var url = "http://" + ip + i + ":75/ping";
+                console.log('Checking', url);
+                
+                var promise = fetch(url, { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
+                .then(response => {
+
+                    //if response status code is 200, then we found the server. Set the form action to url
+                    if (response.status == 200) {
+                        document.forms[0].action = url.replace("ping", "upload");
+                        found = true;            
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+                promises.push(promise);
+            }
+            console.log('waiting for ' + promises.length + ' Promises to resolve');
+            Promise.allSettled(promises).then(() => {
+                document.getElementById("searching").classList.toggle("active");
+                if (!found) {
+                    document.getElementById("noserveralert").classList.toggle("active");
+                } else {
+                    document.getElementById("serverfoundalert").classList.toggle("active");
+                    setTimeout(() => {
+                        // hide the alert after 5 seconds
+                        document.getElementById("serverfoundalert").classList.toggle("active");
+                    }, 5000);
+                }
+            })
+        }
+
+        window.onload = scan;
+    </script>
+    <body class="light">
+        <main class="responsive">
+            <div id="searching" class="snackbar active primary">
+                <p>Searching for server...</p>
+            </div>
+            <div id="noserveralert" class="snackbar error">
+                <p>No server found. Go start one up and refresh the page.</p>
+            </div>
+            <div id="serverfoundalert" class="snackbar success">
+                <p>Server found!</p>
+            </div>
+            <h1>Add New Recipie</h1>
+            <form action="/add" method="post">
+            <div class="field label suffix border">
+                <select name="category" required>
+                    <option value="soups">Soups</option>
+                    <option value="salads">Salads</option>
+                    <option value="dishes">Dishes</option>
+                    <option value="desserts">Desserts</option>
+                </select>
+
+                <label for="category">Category</label>
+            </div>
+            <div class="field label border">
+                <input type="text" id="title" name="title" required>
+                <label for="title">Title</label>
+            </div>
+            <div class="field label border">
+                <input type="file" id="image" name="image" accept="image/*" required>
+                <input type="text" id="image-helper">
+                <label for="image">Image 1</label>
+            </div>
+            <div class="field label border">
+                <input type="file" id="image2" name="image2" accept="image/*">
+                <input type="text" id="image2-helper">
+                <label for="image">Image 2 (optional)</label>
+            </div>
+            <button type="submit" value="Submit">Submit</button>
+            </form>
+            </main>
+    </body>
+</html>
