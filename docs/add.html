@@ -19,12 +19,10 @@
                 
                 var promise = fetch(url, { mode: 'no-cors', signal: AbortSignal.timeout(5000) })
                 .then(response => {
-
-                    //if response status code is 200, then we found the server. Set the form action to url
-                    if (response.status == 200) {
+                        //if response status code is good, then we found the server. Set the form action to url
                         document.forms[0].action = url.replace("ping", "upload");
-                        found = true;            
-                    }
+                        found = true;
+                        console.log('Found a server at', url);
                 })
                 .catch(error => {
                     console.log(error);

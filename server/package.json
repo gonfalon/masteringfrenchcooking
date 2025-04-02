@@ -3,10 +3,15 @@
   "version": "0.0.1",
   "description": "A server utility for converting images of pages from 'Mastering the Art of French Cooking' into formatted recipies",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "Ben Dunphy",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "tesseract.js": "^6.0.0"
+  }
 }

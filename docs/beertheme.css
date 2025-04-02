@@ -36,3 +36,7 @@
     --surface-container-high:#e8e8eb;
     --surface-container-highest:#e2e2e6;
 }
+
+.success {
+    background-color: green;
+}
