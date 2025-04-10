@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "A server utility for converting images of pages from 'Mastering the Art of French Cooking' into formatted recipies",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
@@ -13,6 +12,7 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.2",
     "tesseract.js": "^6.0.0"
   }
 }
