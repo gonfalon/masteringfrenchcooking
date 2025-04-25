@@ -69,6 +69,17 @@ app.get('/:slug', async (req, res) => {
     });
 });
 
+// index endpoint
+app.get('/', async (req, res) => {
+    database.all(`SELECT * FROM recipies`, (err, recipies) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        }
+        res.render('index', { recipies });
+    });
+});
+
 //#endregion
 
 app.listen(port, () => {

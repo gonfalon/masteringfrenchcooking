@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mastering the Art of French Cooking</title>
+        <link href="/beer.min.css" rel="stylesheet">
+        <link href="/beertheme.css" rel="stylesheet">
+        <script type="module" src="/beer.min.js"></script>
+    </head>
+    <body class="light">
+        <main class="responsive">
+            <h1>Mastering the Art of French Cooking</h1>
+            <ul>
+                <% recipies.forEach(recipie => { %>
+                    <li><a href="/<%= recipie.slug %>"><%= recipie.title %></a></li>
+                <% }); %>
+            </ul>
+        </main>
+    </body>
+</html>
