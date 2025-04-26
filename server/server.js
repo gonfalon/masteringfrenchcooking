@@ -65,6 +65,14 @@ app.get('/:slug', async (req, res) => {
             console.error(err);
             res.sendStatus(500);
         }
+
+        if (!recipie) {
+            res.redirect('404.html');
+            return;
+        }
+        recipie.ingredients = recipie.ingredients.split('\n');
+        recipie.instructions = recipie.instructions.split('\n');
+        
         res.render('recipie', recipie);
     });
 });

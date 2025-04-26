@@ -6,12 +6,26 @@
         <link href="/beertheme.css" rel="stylesheet">
         <script type="module" src="/beer.min.js"></script>
     </head>
-    <body class="light">
+    <body class="light" style="background-color: orange;">
         <main class="responsive">
-            <h1><%= title %></h1>
-            <p><%= category %></p>
-            <p><%= ingredients %></p>
-            <p><%= instructions %></p>
+            <article class="padding margin round">
+                <!--<img class="responsive small top-round" src="/beer-and-woman.svg">-->
+                <div class="padding">
+                    <h2><%= title %></h2>
+
+                    <h5>Ingredients:</h5>
+                    <ul>
+                        <% ingredients.forEach(ingredient => { %>
+                            <li><%= ingredient %></li>
+                        <% }); %>
+                    </ul>
+
+                    <h5>Instructions:</h5>
+                    <% instructions.forEach(instruction => { %>
+                        <p><%= instruction %></p>
+                    <% }); %>
+                </div>
+            </article>
         </main>
     </body>
 </html>
