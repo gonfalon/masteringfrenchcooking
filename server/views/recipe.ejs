@@ -6,7 +6,12 @@
         <link href="/beertheme.css" rel="stylesheet">
         <script type="module" src="/beer.min.js"></script>
     </head>
-    <body class="light" style="background-color: orange;">
+    <body class="light" style="background-color: var(--primary)">
+        <header class="max primary center-align margin-top padding-top">
+            <h1>
+                Recipe Trove
+            </h1>
+        </header>
         <main class="responsive">
             <article class="padding margin round">
                 <!--<img class="responsive small top-round" src="/beer-and-woman.svg">-->
@@ -27,5 +32,8 @@
                 </div>
             </article>
         </main>
+        <footer class="max primary center-align">
+            Recipe Trove: your private, personal recipe site. DELETE THIS RECIPIE <!-- add deletion endpoint -->
+        </footer>
     </body>
 </html>

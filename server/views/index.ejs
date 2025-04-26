@@ -10,8 +10,8 @@
         <main class="responsive">
             <h1>Mastering the Art of French Cooking</h1>
             <ul>
-                <% recipies.forEach(recipie => { %>
-                    <li><a href="/<%= recipie.slug %>"><%= recipie.title %></a></li>
+                <% recipes.forEach(recipe => { %>
+                    <li><a href="/<%= recipe.slug %>"><%= recipe.title %></a></li>
                 <% }); %>
             </ul>
         </main>

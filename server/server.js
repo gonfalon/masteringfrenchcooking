@@ -3,13 +3,13 @@ const express  = require('express');
 const morgan = require('morgan');
 const ejs = require('ejs');
 const sqlite = require('sqlite3');
-const database = new sqlite.Database('./recipies.db');
+const database = new sqlite.Database('./recipes.db');
 //#endregion
 
 //#region setup
 // create database table if not exists
 database.run(`
-    CREATE TABLE IF NOT EXISTS recipies (
+    CREATE TABLE IF NOT EXISTS recipes (
         slug TEXT PRIMARY KEY,
         title TEXT,
         category TEXT,
@@ -37,7 +37,7 @@ app.set('view engine', 'ejs');
 //#region endpoints
 
 // upload endpoint
-app.post('/api/add', async (req, res) => {
+app.post('/add/text', async (req, res) => {
 
     console.log(req.body);
     const title = req.body.title;
@@ -49,7 +49,7 @@ app.post('/api/add', async (req, res) => {
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
     database.run(
-        `INSERT INTO recipies (slug, title, category, ingredients, instructions) VALUES (?, ?, ?, ?, ?)`,
+        `INSERT INTO recipes (slug, title, category, ingredients, instructions) VALUES (?, ?, ?, ?, ?)`,
         [slug, title, category, ingredients, instructions]
     );
 
@@ -60,31 +60,31 @@ app.post('/api/add', async (req, res) => {
 // slug endpoint
 app.get('/:slug', async (req, res) => {
     const slug = req.params.slug;
-    database.get(`SELECT * FROM recipies WHERE slug = ?`, [slug], (err, recipie) => {
+    database.get(`SELECT * FROM recipes WHERE slug = ?`, [slug], (err, recipe) => {
         if (err) {
             console.error(err);
             res.sendStatus(500);
         }
 
-        if (!recipie) {
+        if (!recipe) {
             res.redirect('404.html');
             return;
         }
-        recipie.ingredients = recipie.ingredients.split('\n');
-        recipie.instructions = recipie.instructions.split('\n');
+        recipe.ingredients = recipe.ingredients.split('\n');
+        recipe.instructions = recipe.instructions.split('\n');
         
-        res.render('recipie', recipie);
+        res.render('recipe', recipe);
     });
 });
 
 // index endpoint
 app.get('/', async (req, res) => {
-    database.all(`SELECT * FROM recipies`, (err, recipies) => {
+    database.all(`SELECT * FROM recipes`, (err, recipes) => {
         if (err) {
             console.error(err);
             res.sendStatus(500);
         }
-        res.render('index', { recipies });
+        res.render('index', { recipes });
     });
 });
 

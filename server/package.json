@@ -1,7 +1,7 @@
 {
   "name": "mastering-french-cooking-generator",
   "version": "0.0.1",
-  "description": "A server utility for converting images of pages from 'Mastering the Art of French Cooking' into formatted recipies",
+  "description": "A server utility for converting images of pages from 'Mastering the Art of French Cooking' into formatted recipes",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

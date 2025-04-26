@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Add New Recipie - Mastering French Cooking</title>
+        <title>Add New recipe - Mastering French Cooking</title>
         <link href="beer.min.css" rel="stylesheet">
         <link href="beertheme.css" rel="stylesheet">
         <script type="module" src="beer.min.js"></script>
@@ -23,33 +23,45 @@
             }
         </script>
     </head>
-    <body class="light">
+    <body class="light" style="background-color: var(--primary);">
+        <header class="max primary center-align margin-top padding-top">
+            <h1>
+                Recipe Trove
+            </h1>
+        </header>
         <main class="responsive">
-            <h1>Add New Recipie</h1>
-            <form action="api/add" method="POST">
-                <div class="field label suffix border">
-                    <select name="category" required>
-                        <option value="soups">Soups</option>
-                        <option value="salads">Salads</option>
-                        <option value="dishes">Dishes</option>
-                        <option value="desserts">Desserts</option>
-                    </select>
-                    <label for="category">Category</label>
-                </div>
-                <div class="field label border">
-                    <input type="text" id="title" name="title" required>
-                    <label for="title">Title</label>
-                </div>
-                <div class="field label border textarea">
-                    <textarea id="ingredients" name="ingredients" required></textarea>
-                    <label for="author">Ingredients</label>
-                </div>
-                <div class="field label border textarea">
-                    <textarea id="instructions" name="instructions" required></textarea>
-                    <label for="instructions">Instructions</label>
-                </div>
-                <button type="submit" value="Submit">Submit</button>
-            </form>
-            </main>
+            <article class="padding margin round center-align">
+                <h1>Add New Recipe</h1>
+                <form action="add/text" method="POST">
+                    <div class="field label suffix border">
+                        <select name="category" required>
+                            <option value="soups">Soups</option>
+                            <option value="salads">Salads</option>
+                            <option value="dishes">Dishes</option>
+                            <option value="desserts">Desserts</option>
+                        </select>
+                        <label for="category">Category</label>
+                    </div>
+                    <div class="field label border">
+                        <input type="text" id="title" name="title" required>
+                        <label for="title">Title</label>
+                    </div>
+                    <div class="field label border textarea">
+                        <span class="helper">Place each ingredient on its own line</span>
+                        <textarea id="ingredients" name="ingredients" required></textarea>
+                        <label for="author">Ingredients</label>
+                    </div>
+                    <br>
+                    <div class="field label border textarea">
+                        <textarea id="instructions" name="instructions" required></textarea>
+                        <label for="instructions">Instructions</label>
+                    </div>
+                    <button type="submit" value="Submit">Submit</button>
+                </form>
+            </article>
+        </main>
+        <footer class="max primary center-align">
+            Recipe Trove: your private, personal recipe site. 
+        </footer>
     </body>
 </html>
