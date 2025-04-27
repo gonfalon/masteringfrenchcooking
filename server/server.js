@@ -84,6 +84,9 @@ app.get('/', async (req, res) => {
             console.error(err);
             res.sendStatus(500);
         }
+
+        // group recipes
+
         res.render('index', { recipes });
     });
 });

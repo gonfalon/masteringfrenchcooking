@@ -6,14 +6,21 @@
         <link href="/beertheme.css" rel="stylesheet">
         <script type="module" src="/beer.min.js"></script>
     </head>
-    <body class="light">
-        <main class="responsive">
-            <h1>Mastering the Art of French Cooking</h1>
-            <ul>
-                <% recipes.forEach(recipe => { %>
-                    <li><a href="/<%= recipe.slug %>"><%= recipe.title %></a></li>
+    <body class="light" style="background-color: orange;">
+        <%- include('header.ejs') %>
+        <main class="responsive center-align">
+            <article class="padding margin round">
+                <h1>Mastering the Art of French Cooking</h1>
+            </article>
+            <div class="grid">
+            <% recipes.forEach(recipe => { %>
+                <article class="padding margin round s6 l3">
+                    <!--image-->
+                    <p><a href="/<%= recipe.slug %>"><%= recipe.title %></a></p>
+                </article>
                 <% }); %>
-            </ul>
+            </div>
         </main>
+        <%- include('footer.ejs') %>
     </body>
 </html>
