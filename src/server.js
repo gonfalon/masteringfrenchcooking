@@ -1,15 +1,15 @@
 //#region imports
 const express  = require('express');
 const morgan = require('morgan');
-const ejs = require('ejs');
+const nocache = require('nocache');
 const sqlite = require('sqlite3');
-const axios = require('axios'); // Import axios
+const axios = require('axios');
 require('dotenv').config(); // Load environment variables
 const database = new sqlite.Database('./recipes.db');
 //#endregion
 
 //#region setup
-// create database table if not exists - ADD an imageUrl column
+// create database table if not exists
 database.run(`
     CREATE TABLE IF NOT EXISTS recipes (
         slug TEXT PRIMARY KEY,
@@ -24,7 +24,10 @@ database.run(`
 const port = 2369;
 const app = express();
 
-// expose files in ./public on root.
+// disable caching
+app.use(nocache());
+
+// expose files in src/public on root.
 app.use(express.static('public'));
 
 // enable logging
@@ -103,18 +106,16 @@ app.post('/add/text', async (req, res) => { // Make the handler async
     // --- End Image Finding ---
 
     database.run(
-        // Update INSERT statement to include imageUrl
         `INSERT INTO recipes (slug, title, category, ingredients, instructions, imageUrl) VALUES (?, ?, ?, ?, ?, ?)`,
         [slug, title, category, ingredients, instructions, imageUrl], // Add imageUrl here
-        (err) => { // Add error handling for the insert
+        (err) => {
             if (err) {
                 console.error("Database insert error:", err);
-                // Handle duplicate slug or other errors
-                // Maybe render an error page or redirect back with a message
+
                 res.status(500).send("Error saving recipe.");
                 return;
             }
-             //redirect to slug only on success
+
             res.redirect(`/${slug}`);
         }
     );
@@ -137,19 +138,18 @@ app.get('/:slug', async (req, res) => {
         recipe.ingredients = typeof recipe.ingredients === 'string' ? recipe.ingredients.split('\n') : [];
         recipe.instructions = typeof recipe.instructions === 'string' ? recipe.instructions.split('\n') : [];
 
-        // The imageUrl is already in the recipe object from the DB
         res.render('recipe', recipe);
     });
 });
 
-// index endpoint (no changes needed here unless you want thumbnails)
+// index endpoint
 app.get('/', async (req, res) => {
-    database.all(`SELECT slug, title, category, imageUrl FROM recipes`, (err, recipes) => { // Select imageUrl too if needed for index
+    database.all(`SELECT slug, title, category, imageUrl FROM recipes`, (err, recipes) => {
         if (err) {
             console.error(err);
             return res.sendStatus(500);
         }
-        // You might want to group recipes here if needed
+
         res.render('index', { recipes });
     });
 });
