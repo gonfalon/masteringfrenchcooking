@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Mastering the Art of French Cooking</title>
+        <title>Recipe Trove</title>
         <link href="/beer.min.css" rel="stylesheet">
         <link href="/beertheme.css" rel="stylesheet">
         <script type="module" src="/beer.min.js"></script>
@@ -9,17 +9,19 @@
     <body class="light" style="background-color: orange;">
         <%- include('header.ejs') %>
         <main class="responsive center-align">
-            <article class="padding margin round">
-                <h1>Mastering the Art of French Cooking</h1>
-            </article>
             <div class="grid">
             <% recipes.forEach(recipe => { %>
                 <article class="padding margin round s6 l3">
                     <!--image-->
-                    <p><a href="/<%= recipe.slug %>"><%= recipe.title %></a></p>
+                    <p><a href="<%= recipe.slug %>"><%= recipe.title %></a></p>
                 </article>
                 <% }); %>
             </div>
+            <a href="add.html">
+                <button class="surface square round extra large-elevate">
+                    <i>add</i>
+                </button>
+            </a>      
         </main>
         <%- include('footer.ejs') %>
     </body>

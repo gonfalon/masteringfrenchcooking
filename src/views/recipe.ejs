@@ -10,7 +10,9 @@
         <%- include('header.ejs') %>
         <main class="responsive">
             <article class="padding margin round">
-                <!--<img class="responsive small top-round" src="/beer-and-woman.svg">-->
+                <% if (imageUrl) { %>
+                <img src="<%= imageUrl %>" alt="Image for <%= title %>" class="responsive small top-round">
+                <% } %>
                 <div class="padding">
                     <h2><%= title %></h2>
 
