@@ -22,7 +22,7 @@ database.run(`
     );
 `);
 
-const port = 2369;
+const port = process.env.TROVE_PORT || 2369;
 const app = express();
 
 // disable caching
