@@ -12,16 +12,18 @@
             <div class="grid">
             <% recipes.forEach(recipe => { %>
                 <a href="<%= recipe.slug %>" class="round s6 l3">
-                <article class="padding margin round">
-                    <img src="<%= recipe.imageUrl %>" alt="Image for <%= recipe.title %>" class="responsive top-round no-padding">
+                <article class="round">
+                    <% if (recipe.imageUrl) { %>
+                        <img src="<%= recipe.imageUrl %>" alt="Image for <%= recipe.title %>" class="responsive round no-padding">
+                    <% } %>
                     <p><%= recipe.title %></p>
                 </article>
                 </a>
                 <% }); %>
             </div>
             <a href="add.html">
-                <button class="surface square round extra large-elevate">
-                    <i>add</i>
+                <button class="surface round elevate">
+                    <i>add</i> Add New
                 </button>
             </a>      
         </main>
