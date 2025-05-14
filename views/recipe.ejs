@@ -9,11 +9,11 @@
     <body class="light" style="background-color: var(--primary)">
         <%- include('header.ejs') %>
         <main class="responsive">
-            <article class="padding margin round">
+            <article class="no-padding margin round">
                 <% if (imageUrl) { %>
-                <img src="<%= imageUrl %>" alt="Image for <%= title %>" class="responsive small top-round">
+                <img src="<%= imageUrl %>" alt="Image for <%= title %>" class="responsive top-round no-padding">
                 <% } %>
-                <div class="padding">
+                <div class="large-padding large-margin">
                     <h2><%= title %></h2>
 
                     <h5>Ingredients:</h5>

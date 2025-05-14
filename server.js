@@ -1,4 +1,5 @@
 //#region imports
+const interfaces = require('os').networkInterfaces();
 const express  = require('express');
 const morgan = require('morgan');
 const nocache = require('nocache');
@@ -40,7 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 //#endregion
 
-// --- Helper function to search for an image ---
+// Helper function to run a Google Image Search
 async function findRecipeImage(query) {
     const apiKey = process.env.GOOGLE_API_KEY;
     const cseId = process.env.CSE_ID;
@@ -49,8 +50,8 @@ async function findRecipeImage(query) {
     const searchQuery = `${query} food recipe`;
 
     if (!apiKey || !cseId) {
-        console.error("Missing Google API Key or CSE ID in environment variables.");
-        return null; // Or return a default placeholder URL
+        console.warn("Missing one or both GOOGLE_API_KEY and CSE_ID; no images will be retrieved");
+        return null;
     }
 
     const url = `https://www.googleapis.com/customsearch/v1`;
@@ -67,19 +68,18 @@ async function findRecipeImage(query) {
         });
 
         if (response.data && response.data.items && response.data.items.length > 0) {
-            // Prioritize higher resolution images if available, otherwise take the first link
+            // Take the first result
             const imageItem = response.data.items[0];
             return imageItem.link; // This is the direct URL to the image
         } else {
             console.warn(`No image found for query: ${searchQuery}`);
-            return null; // Or return a default placeholder URL
+            return null;
         }
     } catch (error) {
         console.error("Error fetching image from Google Custom Search API:", error.response ? error.response.data : error.message);
-        return null; // Or return a default placeholder URL
+        return null;
     }
 }
-// --- End Helper Function ---
 
 
 //#region endpoints
@@ -157,7 +157,13 @@ app.get('/', async (req, res) => {
 //#endregion
 
 app.listen(port, '0.0.0.0', () => {
-    console.log(`listening on port ${port}`);
+    for (const name of Object.keys(interfaces)) {
+        for (const iface of interfaces[name]) {
+            if (iface.family === 'IPv4' && !iface.internal) {
+                console.log(`Server started at http://${iface.address}:${port}`);
+            }
+        }
+    }
 }).on('error', (err) => {
     console.error(err);
 });

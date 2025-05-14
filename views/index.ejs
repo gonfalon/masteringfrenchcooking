@@ -11,10 +11,12 @@
         <main class="responsive center-align">
             <div class="grid">
             <% recipes.forEach(recipe => { %>
-                <article class="padding margin round s6 l3">
-                    <!--image-->
-                    <p><a href="<%= recipe.slug %>"><%= recipe.title %></a></p>
+                <a href="<%= recipe.slug %>" class="round s6 l3">
+                <article class="padding margin round">
+                    <img src="<%= recipe.imageUrl %>" alt="Image for <%= recipe.title %>" class="responsive top-round no-padding">
+                    <p><%= recipe.title %></p>
                 </article>
+                </a>
                 <% }); %>
             </div>
             <a href="add.html">
